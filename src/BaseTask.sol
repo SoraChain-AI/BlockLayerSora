@@ -1,6 +1,8 @@
 //// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+//defines constants and base task struct 
+
 abstract contract BaseTask {
     struct Task {
         uint id;

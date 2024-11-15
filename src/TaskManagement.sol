@@ -1,16 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+//ensure the task creater stakes the required amount
+
+
 import "./BaseTask.sol";
 
 contract TaskManagement is BaseTask {
-    function createTask(uint reward) public payable {
+    function createTask(uint reward) public payable isCreatorRole(reward) {
         require(msg.value == reward, "reward must be deposited");
 
         Task storage newTask = tasks[taskCounter];
         newTask.id = taskCounter;
         newTask.creator = msg.sender;
         newTask.reward = reward;
+        newTask.totalstaked += CREATOR_STAKE; //can be more than required
         newTask.isActive = true; //should be set for specific time eventually
 
         emit TaskCreated((taskCounter), msg.sender, reward);
@@ -31,6 +35,7 @@ contract TaskManagement is BaseTask {
             msg.value == reward + CREATOR_STAKE,
             "Reward and stake must be deposited"
         );
+        _;
     }
 
     modifier onlyActiveTask(uint taskId) {

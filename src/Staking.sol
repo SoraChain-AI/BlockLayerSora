@@ -3,6 +3,13 @@
 pragma solidity ^0.8.0;
 
 import "./TaskManagement.sol";
+
+//implements a role based stacking mechanism
+/*Task Creator stakes at least CREATOR_STAKE while creating the task.
+Trainer Nodes stake TRAINER_STAKE when joining as trainers.
+Aggregator stakes AGGREGATOR_STAKE during the aggregation phase.
+*/
+
 /*
 To-Do
 *Trainer can unstake  to asign trainer to different task

@@ -23,11 +23,6 @@ $ anvil
 ### Deploy
 
 ```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+forge script script/SoraContract.s.sol --broadcast --rpc-url $RPC_URL --private-key $PRIVATE_KEY
 ```
 
-### Cast
-
-```shell
-$ cast <subcommand>
-```

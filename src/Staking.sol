@@ -3,6 +3,7 @@
 pragma solidity ^0.8.0;
 
 import "./TaskManagement.sol";
+import "./RoleBasedAccess.sol";
 
 //implements a role based stacking mechanism
 /*Task Creator stakes at least CREATOR_STAKE while creating the task.
@@ -16,14 +17,18 @@ To-Do
 *Task Creater can unstake and mark it as complete
 */
 
-contract Staking is TaskManagement {
-    enum Role {
-        TaskCreator,
-        Aggregrator,
-        Trainer
-    }
+contract Staking is TaskManagement, RoleBasedAccess {
+    // enum Role {
+    //     None,
+    //     TaskCreator,
+    //     Aggregrator,
+    //     Trainer
+    // }
 
-    uint public constant MINIMUM_STAKE = 1 ether;
+    // Mapping to store roles by address
+    // mapping(address => Role) public roles;
+
+    // uint public constant MINIMUM_STAKE = 1 ether;
 
     function stakeTokens(
         uint taskID,
@@ -38,7 +43,7 @@ contract Staking is TaskManagement {
         Task storage task = tasks[taskID];
         task.stakes[msg.sender] = msg.value;
         task.totalstaked += msg.value;
-        if (role == Role.Trainer) {
+        if (role == Role.TrainerNode) {
             task.trainers.push(msg.sender);
         }
     }
@@ -47,9 +52,9 @@ contract Staking is TaskManagement {
         require(msg.value != 0, "Stake Tokens not found");
         if (role == Role.TaskCreator) {
             require(msg.value >= CREATOR_STAKE);
-        } else if (role == Role.Aggregrator) {
+        } else if (role == Role.Aggregator) {
             require(msg.value >= AGGREGATOR_STAKE);
-        } else if (role == Role.Trainer) {
+        } else if (role == Role.TrainerNode) {
             require(msg.value >= TRAINER_STAKE);
         } else {
             revert("Invalid Role");

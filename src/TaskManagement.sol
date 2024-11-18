@@ -3,10 +3,10 @@ pragma solidity ^0.8.0;
 
 //ensure the task creater stakes the required amount
 
-
 import "./BaseTask.sol";
 
 contract TaskManagement is BaseTask {
+    
     function createTask(uint reward) public payable isCreatorRole(reward) {
         require(msg.value == reward, "reward must be deposited");
 
@@ -21,7 +21,7 @@ contract TaskManagement is BaseTask {
         taskCounter++;
     }
 
-    modifier onlyTaskCreator(uint taskId) {
+    modifier onlyTaskCreator(uint taskId) virtual  {
         require(tasks[taskId].creator == msg.sender, "Not the task creator");
         _;
     }
@@ -38,9 +38,9 @@ contract TaskManagement is BaseTask {
         _;
     }
 
-    modifier onlyActiveTask(uint taskId) {
-        require(tasks[taskId].isActive, "Task is not active");
+    // modifier onlyActiveTask(uint taskId) {
+    //     require(tasks[taskId].isActive, "Task is not active");
 
-        _;
-    }
+    //     _;
+    // }
 }

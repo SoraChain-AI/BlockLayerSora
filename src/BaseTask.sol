@@ -1,7 +1,7 @@
 //// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-//defines constants and base task struct 
+//defines constants and base task struct
 
 abstract contract BaseTask {
     struct Task {
@@ -12,12 +12,16 @@ abstract contract BaseTask {
         bool isActive;
         address[] trainers; //we can add validators and aggregrator as well later
         mapping(address => uint) stakes;
-        mapping(address => bytes) modelUpdates;
+        mapping(address => bytes) modelUpdates; //state change od model done by a trainer for the task
     }
 
     uint public taskCounter;
     mapping(uint => Task) public tasks;
 
+    modifier onlyActiveTask(uint taskId) {
+        require(tasks[taskId].isActive, "Task is not active");
+        _;
+    }
     // Stake requirements for different roles
     //can be changed by the contract owner
     uint public CREATOR_STAKE = 5 ether;

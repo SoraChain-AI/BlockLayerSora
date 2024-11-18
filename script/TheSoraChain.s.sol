@@ -1,10 +1,9 @@
-// //// SPDX-License-Identifier: MIT
+//// SPDX-License-Identifier: MIT
 
-// pragma solidity <0.9.0;
+pragma solidity <0.9.0;
 
 // import {TheSoraChain} from "./../src/TheSoraChain.sol";
 // import {Script} from "forge-std/Script.sol";
-
 
 // contract DeployTheSoraChain is Script{
 //     TheSoraChain public soraContract;

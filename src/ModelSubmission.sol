@@ -5,7 +5,7 @@ import "./BaseTask.sol";
 // import "./Staking.sol";
 
 contract ModelSubmission is BaseTask {
-    function submitModelUpdate(uint taskId, bytes memory modelUpdate) public {
+    function submitModelUpdate(uint taskId, bytes memory modelUpdate) internal {
         require(tasks[taskId].isActive, "Task is not active");
         Task storage task = tasks[taskId];
         require(task.stakes[msg.sender] >= TRAINER_STAKE, "Must be a staked trainer");

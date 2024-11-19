@@ -27,13 +27,34 @@ contract RoleBasedAccess {
         _;
     }
 
+    modifier onlyCreator(address sender) {
+        require(
+            roles[sender] == Role.TaskCreator,
+            "Only Task Creation role is applicable"
+        );
+        _;
+    }
+
     // Assign roles
     // function assignRole(address user, Role role) public onlyOwner {
     //     roles[user] = role;
     // }
 
-    function assignStackedRole(address user, Role role) public {
+    function assignStackedRole(address user, Role role) internal {
         roles[user] = role;
+    }
+
+    modifier isRoleAssigned(address user) {
+        Role role = roles[user];
+
+        if (
+            role == Role.TaskCreator ||
+            role == Role.Aggregator ||
+            role == Role.TrainerNode
+        ) {
+            revert("Role is already assigned");
+        }
+        _;
     }
 
     // Get role for the caller
@@ -51,7 +72,7 @@ contract RoleBasedAccess {
         }
     }
 
-     // Check if an address is a TaskCreator
+    // Check if an address is a TaskCreator
     function isTaskCreator(address user) public view returns (bool) {
         return roles[user] == Role.TaskCreator;
     }

@@ -11,8 +11,16 @@ abstract contract BaseTask {
         uint totalstaked;
         bool isActive;
         address[] trainers; //we can add validators and aggregrator as well later
+        address[] aggregrators; //we can add validators and aggregrator as well later
         mapping(address => uint) stakes;
         mapping(address => bytes) modelUpdates; //state change od model done by a trainer for the task
+    }
+
+    struct TaskSummary {
+        uint id;
+        string description;
+        bool isActive;
+        address assignedTo;
     }
 
     uint public taskCounter;

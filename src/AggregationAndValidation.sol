@@ -68,7 +68,7 @@ contract AggregationAndValidation is BaseTask {
         task.isActive = false;
 
         // Store the aggregated model hash on-chain
-        trainerNodeContract.storeModelUpdate(taskId, aggregatedModelHash);
+        // trainerNodeContract.storeModelUpdate(taskId, aggregatedModelHash);
 
         emit AggregatedModelStored(taskId, aggregatedModelHash);
 
@@ -76,7 +76,7 @@ contract AggregationAndValidation is BaseTask {
         distributeRewards(taskId);
     }
 
-    modifier onlyTaskCreator(uint taskId) virtual  {
+    modifier onlyTaskCreator(uint taskId) virtual {
         require(tasks[taskId].creator == msg.sender, "Not the task creator");
         _;
     }

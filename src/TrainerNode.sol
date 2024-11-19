@@ -23,7 +23,7 @@ contract TrainerNode is BaseTask {
     );
 
     // Function to store a model update as an IPFS hash
-    function storeModelUpdate(uint taskId, string memory ipfsHash) public {
+    function storeModelUpdate(uint taskId, string memory ipfsHash) internal {
         require(tasks[taskId].isActive, "task not active");
         Task storage task = tasks[taskId];
         require(

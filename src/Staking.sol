@@ -45,7 +45,21 @@ contract Staking is TaskManagement, RoleBasedAccess {
         task.totalstaked += msg.value;
         if (role == Role.TrainerNode) {
             task.trainers.push(msg.sender);
+            assignStackedRole(msg.sender, Role.TaskCreator);
+        } else if (role == Role.Aggregator) {
+            task.aggregrators.push(msg.sender);
+            assignStackedRole(msg.sender, Role.Aggregator);
+        } else {
+            assignStackedRole(msg.sender, Role.None);
         }
+    }
+
+    function stakeCreatorTokens(
+        // Role role,
+        uint reward
+    ) public payable isRoleAssigned(msg.sender) {
+        createTask(reward , msg.value);
+        assignStackedRole(msg.sender, Role.TaskCreator);
     }
 
     modifier hasToken(Role role) {

@@ -45,7 +45,7 @@ contract Staking is TaskManagement, RoleBasedAccess {
         task.totalstaked += msg.value;
         if (role == Role.TrainerNode) {
             task.trainers.push(msg.sender);
-            assignStackedRole(msg.sender, Role.TaskCreator);
+            assignStackedRole(msg.sender, Role.TrainerNode);
         } else if (role == Role.Aggregator) {
             task.aggregrators.push(msg.sender);
             assignStackedRole(msg.sender, Role.Aggregator);
@@ -58,7 +58,7 @@ contract Staking is TaskManagement, RoleBasedAccess {
         // Role role,
         uint reward
     ) public payable isRoleAssigned(msg.sender) {
-        createTask(reward , msg.value);
+        createTask(reward, msg.value);
         assignStackedRole(msg.sender, Role.TaskCreator);
     }
 
@@ -77,10 +77,12 @@ contract Staking is TaskManagement, RoleBasedAccess {
     }
 
     modifier hasNotStackedEarlier(uint taskID) {
-        require(
-            tasks[taskID].stakes[msg.sender] == 0,
-            "Already stacked for the task"
-        );
+        for (uint i = 0; i < taskCounter; i++) {
+            require(
+                tasks[i].stakes[msg.sender] == 0,
+                "Already stacked for the task"
+            );
+        }
         _;
     }
 }

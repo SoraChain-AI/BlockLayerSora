@@ -13,10 +13,6 @@ contract AggregationAndValidation is BaseTask {
     address aggregratorAddress;
     TrainerNode public trainerNodeContract;
 
-    // constructor(address trainerNodeAddress) {
-    //     trainerNodeContract = TrainerNode(trainerNodeAddress);
-    // }
-
     function stakeAsAggregrator(uint taskID) public payable {
         require(tasks[taskID].isActive, "Task is not active");
         require(

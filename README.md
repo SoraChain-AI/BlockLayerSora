@@ -22,6 +22,8 @@ $ anvil
 
 ### Deploy test local
 
+\*\*Do not use personal Private key
+
 ```shell
 forge script script/SoraContract.s.sol --broadcast --rpc-url $RPC_URL --private-key $PRIVATE_KEY
 ```

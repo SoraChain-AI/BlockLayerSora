@@ -30,6 +30,7 @@ abstract contract BaseTask {
         require(tasks[taskId].isActive, "Task is not active");
         _;
     }
+
     // Stake requirements for different roles
     //can be changed by the contract owner
     uint public CREATOR_STAKE = 5 ether;

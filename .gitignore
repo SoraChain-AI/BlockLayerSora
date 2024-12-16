@@ -2,7 +2,8 @@
 cache/
 out/
 /bin/src
-bin
+bin/
+lib
 
 # Ignores development broadcast logs
 !/broadcast

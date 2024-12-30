@@ -72,6 +72,23 @@ contract RoleBasedAccess {
         }
     }
 
+    // Get role for the caller
+    function CheckRole(
+        address user_address
+    ) public view returns (string memory) {
+        Role role = roles[user_address];
+
+        if (role == Role.TaskCreator) {
+            return "TaskCreator";
+        } else if (role == Role.Aggregator) {
+            return "Aggregator";
+        } else if (role == Role.TrainerNode) {
+            return "TrainerNode";
+        } else {
+            return "None";
+        }
+    }
+
     // Check if an address is a TaskCreator
     function isTaskCreator(address user) public view returns (bool) {
         return roles[user] == Role.TaskCreator;

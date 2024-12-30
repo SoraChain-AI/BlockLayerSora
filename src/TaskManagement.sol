@@ -44,11 +44,21 @@ contract TaskManagement is BaseTask {
     modifier isCreatorRole(uint reward, uint stakeValue) {
         require(
             stakeValue >= CREATOR_STAKE,
-            "Insufficient stake for task creation"
+            string(
+                abi.encodePacked(
+                    "Revert - Stake must be deposited. Stake: ",
+                    Strings.toString(CREATOR_STAKE)
+                )
+            )
         );
         require(
             stakeValue >= reward + CREATOR_STAKE,
-            "Reward and stake must be deposited, currently reward is  {$reward} stake {$CREATOOR_STAKE} "
+            string(
+                abi.encodePacked(
+                    "Revert - Stake must be greater than sum of reaward and stake deposited. Stake: ",
+                    Strings.toString(CREATOR_STAKE)
+                )
+            )
         );
         _;
     }

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 //ensure the task creater stakes the required amount
-
+import "lib/openzeppelin-contracts/contracts/utils/Strings.sol";
 import "./BaseTask.sol";
 
 contract TaskManagement is BaseTask {
@@ -16,7 +16,14 @@ contract TaskManagement is BaseTask {
         require(stakeValue >= reward, "reward must be deposited");
         require(
             stakeValue >= reward + CREATOR_STAKE,
-            "Reward and stake must be deposited, currently reward is  {$reward} stake {$CREATOOR_STAKE} "
+            string(
+                abi.encodePacked(
+                    "Revert - Reward and stake must be deposited. Reward: ",
+                    Strings.toString(reward),
+                    " Stake: ",
+                    Strings.toString(CREATOR_STAKE)
+                )
+            )
         );
         Task storage newTask = tasks[taskCounter];
         newTask.id = taskCounter;

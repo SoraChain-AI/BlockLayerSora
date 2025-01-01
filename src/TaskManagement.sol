@@ -7,9 +7,10 @@ import "./BaseTask.sol";
 
 contract TaskManagement is BaseTask {
     // Event to log task creation
-    event TaskCreated(uint id, string details, address creator, uint timestamp);
+    // event TaskCreated(uint id, string details, address creator, uint timestamp);
 
     function createTask(
+        string memory description,
         uint reward,
         uint stakeValue
     ) internal isCreatorRole(reward, stakeValue) {
@@ -26,13 +27,14 @@ contract TaskManagement is BaseTask {
             )
         );
         Task storage newTask = tasks[taskCounter];
+        newTask.description = description;
         newTask.id = taskCounter;
         newTask.creator = msg.sender;
         newTask.reward = reward;
         newTask.totalstaked += CREATOR_STAKE; //can be more than required
         newTask.isActive = true; //should be set for specific time eventually
 
-        emit TaskCreated((taskCounter), msg.sender, reward);
+        emit TaskCreated((taskCounter), description, msg.sender, reward);
         taskCounter++;
     }
 
@@ -98,7 +100,7 @@ contract TaskManagement is BaseTask {
         for (uint i = 0; i < taskCounter; i++) {
             if (tasks[i].isActive) {
                 ids[index] = tasks[i].id;
-                descriptions[index] = "assigned";
+                descriptions[index] = tasks[i].description;
                 isActiveFlags[index] = tasks[i].isActive;
                 assignedTos[index] = tasks[i].creator;
                 index++;
@@ -118,7 +120,7 @@ contract TaskManagement is BaseTask {
         require(taskCounter > 0, "No tasks available");
         TaskSummary memory availableTasks = TaskSummary({
             id: tasks[taskCounter - 1].id,
-            description: "assigned",
+            description: tasks[taskCounter - 1].description,
             isActive: tasks[taskCounter - 1].isActive,
             assignedTo: tasks[taskCounter - 1].creator
         });

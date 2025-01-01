@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 
 abstract contract BaseTask {
     struct Task {
+        string description;
         uint id;
         address creator;
         uint reward;
@@ -37,7 +38,7 @@ abstract contract BaseTask {
     uint public AGGREGATOR_STAKE = 3 ether;
     uint public TRAINER_STAKE = 2 ether;
 
-    event TaskCreated(uint taskID, address indexed creator, uint rewards);
+    event TaskCreated(uint taskID, string description, address indexed creator, uint rewards);
     event ModelSubmitted(
         uint taskID,
         address indexed trainer,

@@ -35,11 +35,6 @@ contract RoleBasedAccess {
         _;
     }
 
-    // Assign roles
-    // function assignRole(address user, Role role) public onlyOwner {
-    //     roles[user] = role;
-    // }
-
     function assignStackedRole(address user, Role role) internal {
         roles[user] = role;
     }
@@ -56,6 +51,10 @@ contract RoleBasedAccess {
         }
         _;
     }
+    // Assign roles
+    // function assignRole(address user, Role role) public onlyOwner {
+    //     roles[user] = role;
+    // }
 
     // Get role for the caller
     function getMyRole() public view returns (string memory) {
@@ -92,5 +91,10 @@ contract RoleBasedAccess {
     // Check if an address is a TaskCreator
     function isTaskCreator(address user) public view returns (bool) {
         return roles[user] == Role.TaskCreator;
+    }
+
+    // Check if an address is a TaskCreator
+    function isTrainerNode(address user) public view returns (bool) {
+        return roles[user] == Role.TrainerNode;
     }
 }

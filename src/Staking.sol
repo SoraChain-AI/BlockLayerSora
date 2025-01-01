@@ -55,10 +55,10 @@ contract Staking is TaskManagement, RoleBasedAccess {
     }
 
     function stakeCreatorTokens(
-        // Role role,
+        string memory description,
         uint reward
     ) public payable isRoleAssigned(msg.sender) {
-        createTask(reward, msg.value);
+        createTask(description, reward, msg.value);
         assignStackedRole(msg.sender, Role.TaskCreator);
     }
 
